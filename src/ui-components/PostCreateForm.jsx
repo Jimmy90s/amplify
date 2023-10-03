@@ -24,15 +24,19 @@ export default function PostCreateForm(props) {
   } = props;
   const initialValues = {
     title: "",
+    image: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
+  const [image, setImage] = React.useState(initialValues.image);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
+    setImage(initialValues.image);
     setErrors({});
   };
   const validations = {
     title: [{ type: "Required" }],
+    image: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +65,7 @@ export default function PostCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           title,
+          image,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -124,6 +129,7 @@ export default function PostCreateForm(props) {
           if (onChange) {
             const modelFields = {
               title: value,
+              image,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -137,6 +143,31 @@ export default function PostCreateForm(props) {
         errorMessage={errors.title?.errorMessage}
         hasError={errors.title?.hasError}
         {...getOverrideProps(overrides, "title")}
+      ></TextField>
+      <TextField
+        label="Image"
+        isRequired={false}
+        isReadOnly={false}
+        value={image}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              image: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.image ?? value;
+          }
+          if (errors.image?.hasError) {
+            runValidationTasks("image", value);
+          }
+          setImage(value);
+        }}
+        onBlur={() => runValidationTasks("image", image)}
+        errorMessage={errors.image?.errorMessage}
+        hasError={errors.image?.hasError}
+        {...getOverrideProps(overrides, "image")}
       ></TextField>
       <Flex
         justifyContent="space-between"
