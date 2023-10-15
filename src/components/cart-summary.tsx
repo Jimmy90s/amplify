@@ -2,17 +2,78 @@
 
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { redirect } from "next/dist/server/api-utils";
 import { useState } from "react";
 import { formatCurrencyString, useShoppingCart } from "use-shopping-cart";
 
 export function CartSummary() {
-  const { formattedTotalPrice, totalPrice, cartDetails, cartCount } =
-    useShoppingCart();
+  const {
+    formattedTotalPrice,
+    totalPrice,
+    cartDetails,
+    cartCount,
+    redirectToCheckout,
+  } = useShoppingCart();
   const [isLoading, setLoading] = useState(false);
   const isDisabled = isLoading || cartCount! === 0;
   const shippingAmount = cartCount! > 0 ? 500 : 0;
   const totalAmount = totalPrice! + shippingAmount;
-  function onCheckout() {}
+  // console.log(cartDetails);
+  // async function onCheckout() {
+  //   setLoading(true);
+  //   const response = await fetch("/api/checkout", {
+  //     method: "POST",
+  //     mode: "no-cors" as RequestMode,
+  //     body: JSON.stringify(cartDetails),
+  //   });
+  //   const data = await response.json();
+  //   const result = await redirectToCheckout(data.id);
+  //   if (result.error) {
+  //     console.error(result);
+  //   }
+  //   setLoading(false);
+  // }
+  async function onCheckout(event: any) {
+    event.preventDefault();
+    let responseClone: any;
+    setLoading(true);
+    try {
+      await fetch("/api/checkout", {
+        method: "POST",
+        mode: "no-cors" as RequestMode,
+        body: JSON.stringify(cartDetails),
+      })
+        .then((response) => {
+          responseClone = response.clone(); // 2
+          return response.json();
+        })
+        .then(
+          (data) => {
+            redirectToCheckout(data.id);
+          },
+          function (rejectionReason) {
+            // 3
+            console.log(
+              "Error parsing JSON from response:",
+              rejectionReason,
+              responseClone
+            ); // 4
+            responseClone
+              .text() // 5
+              .then(function (bodyText: any) {
+                console.log(
+                  "Received the following instead of valid JSON:",
+                  bodyText
+                ); // 6
+              });
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  }
 
   return (
     <section
