@@ -42,8 +42,8 @@ export function ProductGrid({ products }: Props) {
           <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg border-2 border-gray-200 bg-gray-100 group-hover:opacity-75 dark:border-gray-800">
             {/* {product?.images?.map((image) => ( */}
             <Image
-              src={product.images?.shift()}
-              alt={product.name}
+              src={product.images?.shift()!}
+              alt={product.name!}
               width={225}
               height={280}
               className="h-full w-full object-cover object-center"
