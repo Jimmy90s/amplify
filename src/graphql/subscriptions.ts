@@ -74,6 +74,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: Mo
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -99,6 +100,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: Mo
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -124,6 +126,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: Mo
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -140,6 +143,7 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment($filt
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -162,6 +166,7 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment($filt
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -184,6 +189,7 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment($filt
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -199,4 +205,70 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment($filt
 ` as GeneratedSubscription<
   APITypes.OnDeleteCommentSubscriptionVariables,
   APITypes.OnDeleteCommentSubscription
+>;
+export const onCreateProduct = /* GraphQL */ `subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
+  onCreateProduct(filter: $filter) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateProductSubscriptionVariables,
+  APITypes.OnCreateProductSubscription
+>;
+export const onUpdateProduct = /* GraphQL */ `subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
+  onUpdateProduct(filter: $filter) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateProductSubscriptionVariables,
+  APITypes.OnUpdateProductSubscription
+>;
+export const onDeleteProduct = /* GraphQL */ `subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
+  onDeleteProduct(filter: $filter) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteProductSubscriptionVariables,
+  APITypes.OnDeleteProductSubscription
 >;

@@ -75,6 +75,7 @@ export type Post = {
   title: string,
   blog?: Blog | null,
   comments?: ModelCommentConnection | null,
+  image?: string | null,
   createdAt: string,
   updatedAt: string,
   blogPostsId?: string | null,
@@ -108,11 +109,13 @@ export type DeleteBlogInput = {
 export type CreatePostInput = {
   id?: string | null,
   title: string,
+  image?: string | null,
   blogPostsId?: string | null,
 };
 
 export type ModelPostConditionInput = {
   title?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -138,6 +141,7 @@ export type ModelIDInput = {
 export type UpdatePostInput = {
   id: string,
   title?: string | null,
+  image?: string | null,
   blogPostsId?: string | null,
 };
 
@@ -169,6 +173,83 @@ export type DeleteCommentInput = {
   id: string,
 };
 
+export type CreateProductInput = {
+  id?: string | null,
+  name?: string | null,
+  slug?: string | null,
+  images?: Array< string | null > | null,
+  categories?: Array< string | null > | null,
+  sizes?: Array< string | null > | null,
+  colors?: Array< string | null > | null,
+  description?: Array< string | null > | null,
+  sku?: Array< string | null > | null,
+  currency?: Array< string | null > | null,
+  price?: number | null,
+};
+
+export type ModelProductConditionInput = {
+  name?: ModelStringInput | null,
+  slug?: ModelStringInput | null,
+  images?: ModelStringInput | null,
+  categories?: ModelStringInput | null,
+  sizes?: ModelStringInput | null,
+  colors?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  sku?: ModelStringInput | null,
+  currency?: ModelStringInput | null,
+  price?: ModelIntInput | null,
+  and?: Array< ModelProductConditionInput | null > | null,
+  or?: Array< ModelProductConditionInput | null > | null,
+  not?: ModelProductConditionInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type Product = {
+  __typename: "Product",
+  id: string,
+  name?: string | null,
+  slug?: string | null,
+  images?: Array< string | null > | null,
+  categories?: Array< string | null > | null,
+  sizes?: Array< string | null > | null,
+  colors?: Array< string | null > | null,
+  description?: Array< string | null > | null,
+  sku?: Array< string | null > | null,
+  currency?: Array< string | null > | null,
+  price?: number | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateProductInput = {
+  id: string,
+  name?: string | null,
+  slug?: string | null,
+  images?: Array< string | null > | null,
+  categories?: Array< string | null > | null,
+  sizes?: Array< string | null > | null,
+  colors?: Array< string | null > | null,
+  description?: Array< string | null > | null,
+  sku?: Array< string | null > | null,
+  currency?: Array< string | null > | null,
+  price?: number | null,
+};
+
+export type DeleteProductInput = {
+  id: string,
+};
+
 export type ModelBlogFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -186,6 +267,7 @@ export type ModelBlogConnection = {
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -199,6 +281,29 @@ export type ModelCommentFilterInput = {
   or?: Array< ModelCommentFilterInput | null > | null,
   not?: ModelCommentFilterInput | null,
   postCommentsId?: ModelIDInput | null,
+};
+
+export type ModelProductFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  slug?: ModelStringInput | null,
+  images?: ModelStringInput | null,
+  categories?: ModelStringInput | null,
+  sizes?: ModelStringInput | null,
+  colors?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  sku?: ModelStringInput | null,
+  currency?: ModelStringInput | null,
+  price?: ModelIntInput | null,
+  and?: Array< ModelProductFilterInput | null > | null,
+  or?: Array< ModelProductFilterInput | null > | null,
+  not?: ModelProductFilterInput | null,
+};
+
+export type ModelProductConnection = {
+  __typename: "ModelProductConnection",
+  items:  Array<Product | null >,
+  nextToken?: string | null,
 };
 
 export type ModelSubscriptionBlogFilterInput = {
@@ -241,6 +346,7 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionPostFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
 };
@@ -250,6 +356,34 @@ export type ModelSubscriptionCommentFilterInput = {
   content?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
   or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
+};
+
+export type ModelSubscriptionProductFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  slug?: ModelSubscriptionStringInput | null,
+  images?: ModelSubscriptionStringInput | null,
+  categories?: ModelSubscriptionStringInput | null,
+  sizes?: ModelSubscriptionStringInput | null,
+  colors?: ModelSubscriptionStringInput | null,
+  description?: ModelSubscriptionStringInput | null,
+  sku?: ModelSubscriptionStringInput | null,
+  currency?: ModelSubscriptionStringInput | null,
+  price?: ModelSubscriptionIntInput | null,
+  and?: Array< ModelSubscriptionProductFilterInput | null > | null,
+  or?: Array< ModelSubscriptionProductFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
 };
 
 export type CreateBlogMutationVariables = {
@@ -330,6 +464,7 @@ export type CreatePostMutation = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -357,6 +492,7 @@ export type UpdatePostMutation = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -384,6 +520,7 @@ export type DeletePostMutation = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -403,6 +540,7 @@ export type CreateCommentMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -427,6 +565,7 @@ export type UpdateCommentMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -451,6 +590,7 @@ export type DeleteCommentMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -459,6 +599,78 @@ export type DeleteCommentMutation = {
     createdAt: string,
     updatedAt: string,
     postCommentsId?: string | null,
+  } | null,
+};
+
+export type CreateProductMutationVariables = {
+  input: CreateProductInput,
+  condition?: ModelProductConditionInput | null,
+};
+
+export type CreateProductMutation = {
+  createProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateProductMutationVariables = {
+  input: UpdateProductInput,
+  condition?: ModelProductConditionInput | null,
+};
+
+export type UpdateProductMutation = {
+  updateProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteProductMutationVariables = {
+  input: DeleteProductInput,
+  condition?: ModelProductConditionInput | null,
+};
+
+export type DeleteProductMutation = {
+  deleteProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -520,6 +732,7 @@ export type GetPostQuery = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -539,6 +752,7 @@ export type ListPostsQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -559,6 +773,7 @@ export type GetCommentQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -586,6 +801,58 @@ export type ListCommentsQuery = {
       createdAt: string,
       updatedAt: string,
       postCommentsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetProductQueryVariables = {
+  id: string,
+};
+
+export type GetProductQuery = {
+  getProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListProductsQueryVariables = {
+  filter?: ModelProductFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProductsQuery = {
+  listProducts?:  {
+    __typename: "ModelProductConnection",
+    items:  Array< {
+      __typename: "Product",
+      id: string,
+      name?: string | null,
+      slug?: string | null,
+      images?: Array< string | null > | null,
+      categories?: Array< string | null > | null,
+      sizes?: Array< string | null > | null,
+      colors?: Array< string | null > | null,
+      description?: Array< string | null > | null,
+      sku?: Array< string | null > | null,
+      currency?: Array< string | null > | null,
+      price?: number | null,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -665,6 +932,7 @@ export type OnCreatePostSubscription = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -691,6 +959,7 @@ export type OnUpdatePostSubscription = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -717,6 +986,7 @@ export type OnDeletePostSubscription = {
       __typename: "ModelCommentConnection",
       nextToken?: string | null,
     } | null,
+    image?: string | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
@@ -735,6 +1005,7 @@ export type OnCreateCommentSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -758,6 +1029,7 @@ export type OnUpdateCommentSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -781,6 +1053,7 @@ export type OnDeleteCommentSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      image?: string | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
@@ -789,5 +1062,74 @@ export type OnDeleteCommentSubscription = {
     createdAt: string,
     updatedAt: string,
     postCommentsId?: string | null,
+  } | null,
+};
+
+export type OnCreateProductSubscriptionVariables = {
+  filter?: ModelSubscriptionProductFilterInput | null,
+};
+
+export type OnCreateProductSubscription = {
+  onCreateProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateProductSubscriptionVariables = {
+  filter?: ModelSubscriptionProductFilterInput | null,
+};
+
+export type OnUpdateProductSubscription = {
+  onUpdateProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteProductSubscriptionVariables = {
+  filter?: ModelSubscriptionProductFilterInput | null,
+};
+
+export type OnDeleteProductSubscription = {
+  onDeleteProduct?:  {
+    __typename: "Product",
+    id: string,
+    name?: string | null,
+    slug?: string | null,
+    images?: Array< string | null > | null,
+    categories?: Array< string | null > | null,
+    sizes?: Array< string | null > | null,
+    colors?: Array< string | null > | null,
+    description?: Array< string | null > | null,
+    sku?: Array< string | null > | null,
+    currency?: Array< string | null > | null,
+    price?: number | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };

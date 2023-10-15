@@ -86,6 +86,7 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -114,6 +115,7 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -142,6 +144,7 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -161,6 +164,7 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -186,6 +190,7 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -211,6 +216,7 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -226,4 +232,79 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
 ` as GeneratedMutation<
   APITypes.DeleteCommentMutationVariables,
   APITypes.DeleteCommentMutation
+>;
+export const createProduct = /* GraphQL */ `mutation CreateProduct(
+  $input: CreateProductInput!
+  $condition: ModelProductConditionInput
+) {
+  createProduct(input: $input, condition: $condition) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateProductMutationVariables,
+  APITypes.CreateProductMutation
+>;
+export const updateProduct = /* GraphQL */ `mutation UpdateProduct(
+  $input: UpdateProductInput!
+  $condition: ModelProductConditionInput
+) {
+  updateProduct(input: $input, condition: $condition) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateProductMutationVariables,
+  APITypes.UpdateProductMutation
+>;
+export const deleteProduct = /* GraphQL */ `mutation DeleteProduct(
+  $input: DeleteProductInput!
+  $condition: ModelProductConditionInput
+) {
+  deleteProduct(input: $input, condition: $condition) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteProductMutationVariables,
+  APITypes.DeleteProductMutation
 >;

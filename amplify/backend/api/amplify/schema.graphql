@@ -22,3 +22,68 @@ type Comment @model {
   post: Post @belongsTo
   content: String!
 }
+type Product @model {
+  id: ID!
+  name: String
+  slug: String
+  images: [String]
+  categories: [String]
+  sizes: [String]
+  colors: [String]
+  description: [String]
+  sku: [String]
+  currency: [String]
+  price: Int
+}
+
+# type Query {
+#   user: User
+# }
+
+# type User @key(fields: "id") {
+#   id: ID!
+
+#   """
+#   Saved payment methods that can be used to submit orders
+#   """
+#   paymentMethods: [PaymentMethod]
+
+#   """
+#   The user's active cart session. Once the cart items have been purchases, they transition to an Order
+#   """
+#   cart: Cart
+# }
+
+# """
+# An user's saved cart session. Only one cart can be active at a time
+# """
+# type Cart {
+#   """
+#   Items saved in the cart session
+#   """
+#   items: [Variant]
+
+#   """
+#   The current total of all the items in the cart, before taxes and shipping
+#   """
+#   subtotal: Float
+# }
+
+# """
+# A saved payment option for an user
+# """
+# type PaymentMethod {
+#   id: ID!
+#   name: String
+#   description: String
+#   type: PaymentType!
+# }
+
+# """
+# A fix set of payment types that we accept
+# """
+# enum PaymentType {
+#   CREDIT_CARD
+#   DEBIT_CARD
+#   BANK_ACCOUNT
+# }

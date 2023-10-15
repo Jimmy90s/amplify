@@ -55,6 +55,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
       nextToken
       __typename
     }
+    image
     createdAt
     updatedAt
     blogPostsId
@@ -71,6 +72,7 @@ export const listPosts = /* GraphQL */ `query ListPosts(
     items {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -87,6 +89,7 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
     post {
       id
       title
+      image
       createdAt
       updatedAt
       blogPostsId
@@ -124,4 +127,56 @@ export const listComments = /* GraphQL */ `query ListComments(
 ` as GeneratedQuery<
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
+>;
+export const getProduct = /* GraphQL */ `query GetProduct($id: ID!) {
+  getProduct(id: $id) {
+    id
+    name
+    slug
+    images
+    categories
+    sizes
+    colors
+    description
+    sku
+    currency
+    price
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetProductQueryVariables,
+  APITypes.GetProductQuery
+>;
+export const listProducts = /* GraphQL */ `query ListProducts(
+  $filter: ModelProductFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      slug
+      images
+      categories
+      sizes
+      colors
+      description
+      sku
+      currency
+      price
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListProductsQueryVariables,
+  APITypes.ListProductsQuery
 >;
