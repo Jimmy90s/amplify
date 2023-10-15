@@ -1,4 +1,2 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  reactStrictMode: false,
-};
+export const reactStrictMode = false;
