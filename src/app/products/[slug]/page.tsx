@@ -38,8 +38,8 @@ export default async function Page({ searchParams }: Props) {
   });
   console.log(oneProduct);
   const product = oneProduct.data?.getProduct;
-  const pro: any = product?.images?.map((image) => image);
-  const img = pro[0];
+  // const pro: any = product?.images?.map((image) => image);
+  // const img = pro[0];
 
   return (
     <main className="mx-auto max-w-5xl sm:px-6 sm:pt-16 lg:px-8">

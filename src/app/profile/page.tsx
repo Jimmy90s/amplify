@@ -1,9 +1,10 @@
 "use client";
 
+import "@/styles/globals.css";
+import awsExports from "../../aws-exports";
+import { Amplify } from "aws-amplify";
 import { Inter } from "next/font/google";
 import Image from "next/image";
-import { Amplify } from "aws-amplify";
-import awsExports from "../../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import {
   withAuthenticator,
@@ -14,13 +15,12 @@ import {
   WithAuthenticatorProps,
 } from "@aws-amplify/ui-react";
 
-Amplify.configure(awsExports);
-
+Amplify.configure({ ...awsExports, ssr: true });
 const inter = Inter({ subsets: ["latin"] });
 
 function Home({ signOut, user }: WithAuthenticatorProps) {
   return (
-    <View className="Home">
+    <View className="Home justify-center">
       <Card>
         <Image
           src="/vercel.svg"
@@ -30,9 +30,9 @@ function Home({ signOut, user }: WithAuthenticatorProps) {
           height={24}
           priority
         />
-        <Heading level={1}>Welcome</Heading>
+        <Button onClick={signOut}>Sign Out</Button>
+        <Heading level={1}>Welcome {user?.attributes?.email}</Heading>
       </Card>
-      <Button onClick={signOut}>Sign Out</Button>
     </View>
   );
 }

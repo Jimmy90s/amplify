@@ -91,7 +91,7 @@ export default function CommentCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createComment,
+            query: createComment.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

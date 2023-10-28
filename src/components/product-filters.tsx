@@ -34,8 +34,8 @@ const filters = [
     ],
   },
   {
-    id: "size",
-    name: "Size",
+    id: "sizes",
+    name: "Sizes",
     options: [
       { value: "xs", label: "X-Small" },
       { value: "s", label: "Small" },

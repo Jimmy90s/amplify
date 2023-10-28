@@ -16,7 +16,7 @@ export function CheckoutSession({ customerDetails }: Props) {
       clearCart();
     }
     return;
-  }, []);
+  }, [clearCart, customerDetails]);
 
   if (!customerDetails) {
     return (

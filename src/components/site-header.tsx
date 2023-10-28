@@ -5,12 +5,15 @@ import { MainNav } from "@/components/main-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Edit, ShoppingBag } from "lucide-react";
+import { Authenticator } from "@aws-amplify/ui-react";
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import { UserIcon, ShoppingBag, Edit2Icon, FileEditIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useShoppingCart } from "use-shopping-cart";
 
 export function SiteHeader() {
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
   const pathname = usePathname();
   const router = useRouter();
   const serachParams = useSearchParams();
@@ -42,6 +45,19 @@ export function SiteHeader() {
           />
         </form>
         <div className="flex items-center space-x-1">
+          {user && (
+            <Link href="/addProduct">
+              <Button size="sm" variant="ghost">
+                <FileEditIcon className="h-5 w-5" />
+              </Button>
+            </Link>
+          )}
+
+          <Link href="/profile">
+            <Button size="sm" variant="ghost">
+              <UserIcon className="h-5 w-5" />
+            </Button>
+          </Link>
           <Link href="/cart">
             <Button size="sm" variant="ghost">
               <ShoppingBag className="h-5 w-5" />

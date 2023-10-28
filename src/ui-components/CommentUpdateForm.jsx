@@ -42,7 +42,7 @@ export default function CommentUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getComment,
+              query: getComment.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getComment
@@ -112,7 +112,7 @@ export default function CommentUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateComment,
+            query: updateComment.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: commentRecord.id,

@@ -42,7 +42,7 @@ export default function BlogUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getBlog,
+              query: getBlog.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getBlog
@@ -112,7 +112,7 @@ export default function BlogUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateBlog,
+            query: updateBlog.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: blogRecord.id,

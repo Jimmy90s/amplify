@@ -244,7 +244,7 @@ export default function ProductUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getProduct,
+              query: getProduct.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getProduct
@@ -348,7 +348,7 @@ export default function ProductUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateProduct,
+            query: updateProduct.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: productRecord.id,

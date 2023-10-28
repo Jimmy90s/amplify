@@ -1,3 +1,5 @@
+"use client";
+
 import { CreateProductInput, CreateProductMutation } from "../API";
 import { ListProductsQuery, GetProductQuery } from "../API";
 import awsconfig from "../aws-exports";
@@ -11,8 +13,8 @@ import { SanityProduct } from "@/config/inventory";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { GraphQLQuery } from "@aws-amplify/api";
-import { Amplify, API, graphqlOperation, withSSRContext } from "aws-amplify";
-import { headers } from "next/headers";
+import { Amplify, API, graphqlOperation } from "aws-amplify";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 // const productDetails: CreateProductInput = {
@@ -38,51 +40,43 @@ Amplify.configure({ ...awsconfig, ssr: true });
 //   query: mutations.createProduct,
 //   variables: { input: productDetails },
 // });
+
+// Fetch a single record by its identifier
+// const oneProduct = await API.graphql<GraphQLQuery<GetProductQuery>>({
+//   query: queries.getProduct,
+//   variables: { id: "some id" },
+// });
+type Repo = {
+  products: any
+}
 interface Props {
   searchParams: {
-    date?: string;
+    date?: string | boolean | undefined;
     price?: string;
     color?: string;
     category?: string;
     sizes?: string;
     search?: string;
   };
+  products?:any
 }
 
-async function getData() {
-  // Simple query
-  let allProducts: any = await API.graphql<GraphQLQuery<ListProductsQuery>>(
-    {
-      query: queries.listProducts,
-    },
-    { cache: "no-store" }
-  );
+// async function getData() {
+//   // Simple query
+//   let allProducts: any = await API.graphql<GraphQLQuery<ListProductsQuery>>(
+//     {
+//       query: queries.listProducts,
+//     },
+//     { cache: "force-cache" }
+//   );
 
-  let products = await allProducts.data?.listProducts?.items;
+//   let products = await allProducts.data?.listProducts?.items;
 
-  return products;
-}
-export default async function Page({ searchParams }: Props) {
-  const req = {
-    headers: {
-      cookie: headers().get("cookie"),
-    },
-  };
-  const SSR = withSSRContext({ req });
+//   return products;
+// }
 
-  const data = await SSR.API.graphql(
-    {
-      query: queries.listProducts,
-    },
-    { cache: "no-store" }
-  );
-
+export default function Home({ searchParams }: Props, { products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   //let products = await getData();
-  // let allProducts: any = await API.graphql<GraphQLQuery<ListProductsQuery>>({
-  //   query: queries.listProducts,
-  // });
-
-  let products = await data.data?.listProducts?.items;
 
   console.log(searchParams);
   const { date = "desc", price, color, category, sizes, search } = searchParams;
@@ -96,27 +90,6 @@ export default async function Page({ searchParams }: Props) {
       return products.sort((a: any, b: any) => b.createdAt - a.createdAt);
     }
   };
-  // let list: any;
-  // color
-  //   ? (list = products.filter(
-  //       (product: any) =>
-  //         product.colors.includes(color) === true &&
-  //         product.categories.includes(category) === true
-  //     ))
-  //   : category
-  //   ? (list = products.filter(
-  //       (product: any) =>
-  //         product.categories.includes(category) === true &&
-  //         product.colors.includes(color) === true
-  //     ))
-  //   : sizes
-  //   ? (list = products.filter(
-  //       (product: any) =>
-  //         product.sizes.includes(sizes) === true &&
-  //         product.categories.includes(category) === true &&
-  //         product.colors.includes(color) === true
-  //     ))
-  //   : (list = products);
 
   search
     ? (products = products.filter((product: any) =>
@@ -141,23 +114,9 @@ export default async function Page({ searchParams }: Props) {
 
   let sortedList = userSortChoice(products, searchParams);
   console.log(sortedList);
-  // const [products, setProducts] = useState(
-  //   allProducts.data?.listProducts?.items
-  // );
-  // console.log(allProducts); // result: { "data": { "listTodos": { "items": [/* ..... */] } } }
-
-  // Fetch a single record by its identifier
-  // const oneProduct = await API.graphql<GraphQLQuery<GetProductQuery>>({
-  //   query: queries.getProduct,
-  //   variables: { id: "some id" },
-  // });
 
   return (
     <div>
-      <div className="px-4 pt-20 text-center">
-        <h1 className="text-4xl font-extrabold tracking-normal">Name</h1>
-        <p className="mx-auto mt-4 max-w-3xl text-base">Description</p>
-      </div>
       <div>
         <main className="mx-auto max-w-6xl px-6">
           <div className="flex items-center justify-between border-b border-gray-200 pb-4 pt-24 dark:border-gray-800">
@@ -185,19 +144,39 @@ export default async function Page({ searchParams }: Props) {
               </div>
               {/* Product grid */}
               <ProductGrid products={sortedList} />
-              {/* {products?.map((product) => (
-                <div key={product?.id}>
-                  <li>{product?.slug}</li>
-                  <li>{product?.name}</li>
-                  {product?.images?.map((image) => (
-                    <img src={image} alt={image} key={product.id} />
-                  ))}
-                </div>
-              ))} */}
             </div>
           </section>
         </main>
       </div>
     </div>
   );
+}
+
+
+
+export const getServerSideProps = (async (context) => {
+  // ...
+  const allProducts: any = await API.graphql<GraphQLQuery<ListProductsQuery>>({
+    query: queries.listProducts,
+  });
+
+  const products = await allProducts.data?.listProducts?.items;
+  // Pass data to the page via props
+  return { props: { products } };
+})satisfies GetServerSideProps<{
+  products: Repo
+}>
+
+async function getData() {
+  // Simple query
+  let allProducts: any = await API.graphql<GraphQLQuery<ListProductsQuery>>(
+    {
+      query: queries.listProducts,
+    },
+    { cache: "force-cache" }
+  );
+
+  let products = await allProducts.data?.listProducts?.items;
+
+  return products;
 }

@@ -14,10 +14,6 @@ interface Props {
 }
 
 export function ProductGrid({ products }: Props) {
-  const pro: any = products?.map((product) => product?.images);
-  const img = pro[0];
-  // console.log(img);
-
   if (products?.length === 0) {
     return (
       <div className="mx-auto grid h-40 w-full place-items-center rounded-md border-2 border-dashed bg-gray-50 py-10 text-center dark:bg-gray-900">
@@ -56,12 +52,11 @@ export function ProductGrid({ products }: Props) {
           </div>
           <h3 className="mt-4 font-medium">{product.name}</h3>
           <p className="mt-2 font-medium">
-            {formatCurrencyString({
+            {/* {formatCurrencyString({
               value: product.price as number,
               currency: "USD",
-            })}
-
-            {/* ${product.price} {product.currency} */}
+            })} */}
+            ${product.price} {product.currency}
           </p>
         </Link>
       ))}

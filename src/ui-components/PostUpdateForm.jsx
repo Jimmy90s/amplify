@@ -45,7 +45,7 @@ export default function PostUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getPost,
+              query: getPost.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getPost
@@ -117,7 +117,7 @@ export default function PostUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updatePost,
+            query: updatePost.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: postRecord.id,

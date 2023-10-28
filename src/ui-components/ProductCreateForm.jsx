@@ -327,7 +327,7 @@ export default function ProductCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createProduct,
+            query: createProduct.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

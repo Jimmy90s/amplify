@@ -96,7 +96,7 @@ export default function PostCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createPost,
+            query: createPost.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

@@ -1,7 +1,6 @@
-import Link from "next/link"
-
-import { siteConfig } from "@/config/site"
-import { Icons } from "@/components/icons"
+import { Icons } from "@/components/icons";
+import { siteConfig } from "@/config/site";
+import Link from "next/link";
 
 export function MainNav() {
   return (
@@ -13,5 +12,5 @@ export function MainNav() {
         </span>
       </Link>
     </div>
-  )
+  );
 }

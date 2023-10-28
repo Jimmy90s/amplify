@@ -91,7 +91,7 @@ export default function BlogCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createBlog,
+            query: createBlog.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
